@@ -1,0 +1,2 @@
+Feynman Platform backend is running at http://localhost:3000
+MongoDB connected successfully!
