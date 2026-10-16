@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const auth = require('../middleware/auth');
-const { transcribeAudio } = require('../controllers/baiduAiController');
+const { transcribeAudio, evaluateFeynmanAttempt } = require('../controllers/baiduAiController');
 
 // 配置multer：使用内存存储，音频只是临时中转给百度AI，不落盘
 // 限制10MB（百度短语音识别上限：时长60秒、文件10MB）
@@ -21,6 +21,11 @@ router.post(
     upload.single('audio'), // 'audio' 必须和前端 FormData.append 的字段名一致
     transcribeAudio
 );
+
+// @route   POST /api/audio/evaluate
+// @desc    AI润色复述文本 + 对照知识点智能评价打分
+// @access  Private
+router.post('/evaluate', auth, evaluateFeynmanAttempt);
 
 // multer 错误处理：字段名不对、文件超过10MB等 → 返回400而不是500
 // eslint-disable-next-line no-unused-vars
