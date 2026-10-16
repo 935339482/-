@@ -32,6 +32,9 @@ app.use('/api/users', require('./routes/users'));
 // 知识点相关路由（CRUD，均需认证）：完整路径前缀为 /api/knowledge-points
 app.use('/api/knowledge-points', require('./routes/knowledgePoints'));
 
+// 语音识别路由（上传录音并转录，需认证）：完整路径为 /api/audio/transcribe
+app.use('/api/audio', require('./routes/audio'));
+
 // --- 启动服务器 ---
 app.listen(port, () => {
   console.log(`Feynman Platform backend is running at http://localhost:${port}`);
